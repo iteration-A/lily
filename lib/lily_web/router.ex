@@ -7,6 +7,10 @@ defmodule LilyWeb.Router do
 
   scope "/api", LilyWeb do
     pipe_through :api
+
+    scope "/v1" do
+      resources "/users", UserController, except: ~w(edit show)a
+    end
   end
 
   # Enables LiveDashboard only for development
