@@ -3,6 +3,7 @@ defmodule LilyWeb.UserController do
 
   alias Lily.Accounts
   alias Lily.Accounts.User
+  alias LilyWeb.Plugs.Auth
 
   action_fallback LilyWeb.FallbackController
 
@@ -30,11 +31,13 @@ defmodule LilyWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def delete(conn, _params) do
+    user = conn.assigns.current_user
 
     with {:ok, %User{}} <- Accounts.delete_user(user) do
-      send_resp(conn, :no_content, "")
+      conn
+      |> Auth.logout()
+      |> send_resp(:no_content, "")
     end
   end
 end
