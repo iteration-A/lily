@@ -1,6 +1,7 @@
 defmodule LilyWeb.UserController do
   use LilyWeb, :controller
 
+  alias Lily.Settings
   alias Lily.Accounts
   alias Lily.Accounts.User
   alias LilyWeb.Plugs.Auth
@@ -8,6 +9,7 @@ defmodule LilyWeb.UserController do
   action_fallback LilyWeb.FallbackController
 
   plug LilyWeb.Plugs.Auth when action in ~w(update delete)a
+  plug :guard_registration when action in ~w(create)a
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
@@ -39,5 +41,15 @@ defmodule LilyWeb.UserController do
       |> Auth.logout()
       |> send_resp(:no_content, "")
     end
+  end
+
+  defp guard_registration(conn, _params) do
+    unless Settings.allow_registration() do
+      conn
+      |> halt()
+      |> send_resp(:forbidden, "Registration is not allow at the moment.")
+    end
+
+    conn
   end
 end
