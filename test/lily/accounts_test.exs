@@ -56,7 +56,10 @@ defmodule Lily.AccountsTest do
     test "update_user/2 with invalid data returns error changeset" do
       user = user_fixture()
       new_first_name = "Cool first name"
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, %{@invalid_attrs | first_name: new_first_name})
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_user(user, %{@invalid_attrs | first_name: new_first_name})
+
       assert user.first_name != new_first_name
     end
 
