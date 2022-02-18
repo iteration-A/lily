@@ -10,6 +10,8 @@ defmodule LilyWeb.Router do
     pipe_through :api
 
     scope "/v1" do
+      get "/settings", SettingsController, :index
+
       scope "/users" do
         get "/:id", UserController, :show
         post "/", UserController, :create
