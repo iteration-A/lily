@@ -9,7 +9,8 @@ defmodule LilyWeb.Router do
     pipe_through :api
 
     scope "/v1" do
-      resources "/users", UserController, except: ~w(edit show)a
+      # resources "/users", UserController, only: ~w(create show update delete)a
+      resources "/users", UserController, only: ~w(create)a
     end
   end
 

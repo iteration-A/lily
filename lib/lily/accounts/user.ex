@@ -21,18 +21,18 @@ defmodule Lily.Accounts.User do
     |> cast(attrs, [:first_name, :last_name, :username])
     |> validate_required([:first_name, :last_name, :username])
     |> validate_format(:username, ~r/^[a-z0-9_-]*[a-b][a-z0-9_-]*$/i)
-    |> validate_length(:username, mix: 4, max: 12)
-    |> validate_length(:password, mix: 8, max: 100)
-    |> validate_length(:first_name, mix: 1, max: 100)
-    |> validate_length(:last_name, mix: 1, max: 100)
+    |> validate_length(:username, min: 4, max: 12)
+    |> validate_length(:first_name, min: 1, max: 100)
+    |> validate_length(:last_name, min: 1, max: 100)
     |> unique_constraint(:username)
   end
 
   def registration_changeset(user, attrs) do
     user
-    |> cast(attrs, [:password])
-    |> validate_required(:password)
     |> changeset(attrs)
+    |> cast(attrs, [:password])
+    |> validate_required([:password])
+    |> validate_length(:password, min: 8, max: 100)
     |> put_hashed_password()
     |> put_random_username_id()
   end
