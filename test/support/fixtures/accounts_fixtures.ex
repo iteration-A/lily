@@ -7,7 +7,7 @@ defmodule Lily.AccountsFixtures do
   @doc """
   Generate a unique user username.
   """
-  def unique_user_username, do: "some username#{System.unique_integer([:positive])}"
+  def unique_user_username, do: "username#{System.unique_integer([:positive])}"
 
   @doc """
   Generate a user.
@@ -17,7 +17,7 @@ defmodule Lily.AccountsFixtures do
       attrs
       |> Enum.into(%{
         first_name: "some first_name",
-        hashed_password: "some hashed_password",
+        password: "some password",
         last_name: "some last_name",
         username: unique_user_username()
       })
