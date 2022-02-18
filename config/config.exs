@@ -15,7 +15,8 @@ config :lily, LilyWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: LilyWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Lily.PubSub,
-  live_view: [signing_salt: "cPuWkmuY"]
+  live_view: [signing_salt: "cPuWkmuY"],
+  secret_key_base: "CkleZaIIuTRKBkZGYqV6BsZ2p/IMYHEcHrk9f6WoP+r7Ca6hd1DbpP1g/EOq82sT"
 
 # Configures the mailer
 #

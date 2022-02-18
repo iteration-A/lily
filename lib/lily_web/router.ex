@@ -6,11 +6,16 @@ defmodule LilyWeb.Router do
   end
 
   scope "/api", LilyWeb do
+    pipe_through :fetch_session
     pipe_through :api
 
     scope "/v1" do
-      # resources "/users", UserController, only: ~w(create show update delete)a
-      resources "/users", UserController, only: ~w(create)a
+      scope "/users" do
+        get "/:id", UserController, :show
+        post "/", UserController, :create
+        patch "/", UserController, :update
+        delete "/", UserController, :delete
+      end
     end
   end
 

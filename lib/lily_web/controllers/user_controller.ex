@@ -6,6 +6,8 @@ defmodule LilyWeb.UserController do
 
   action_fallback LilyWeb.FallbackController
 
+  plug LilyWeb.Plugs.Auth when action in ~w(update delete)a
+
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       conn
@@ -20,8 +22,8 @@ defmodule LilyWeb.UserController do
     render(conn, "show.json", user: user)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
+  def update(conn, %{"user" => user_params}) do
+    user = conn.assings.current_user
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
       render(conn, "show.json", user: user)
