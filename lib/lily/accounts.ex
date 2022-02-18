@@ -85,7 +85,7 @@ defmodule Lily.Accounts do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> User.changeset(attrs)
+    |> User.updating_changeset(attrs)
     |> Repo.update()
   end
 
@@ -116,5 +116,21 @@ defmodule Lily.Accounts do
   """
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
+  end
+
+  def authenticate_user(username, password) do
+    from(user in User, where: user.username == ^username)
+    |> Repo.one!()
+    |> case do
+      nil ->
+        {:error, :not_found}
+
+      %{hashed_password: hashed_password} = user ->
+        if Bcrypt.verify_pass(password, hashed_password) do
+          {:ok, user}
+        else
+          {:error, :invalid_password}
+        end
+    end
   end
 end

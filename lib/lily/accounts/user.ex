@@ -21,10 +21,23 @@ defmodule Lily.Accounts.User do
     |> cast(attrs, [:first_name, :last_name, :username])
     |> validate_required([:first_name, :last_name, :username])
     |> validate_format(:username, ~r/^[a-z0-9_-]*[a-b][a-z0-9_-]*$/i)
-    |> validate_length(:username, min: 4, max: 12)
+    |> validate_length(:username, min: 4, max: 20)
     |> validate_length(:first_name, min: 1, max: 100)
     |> validate_length(:last_name, min: 1, max: 100)
     |> unique_constraint(:username)
+  end
+
+  def updating_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:first_name, :last_name, :username, :password])
+    |> validate_required([:first_name, :last_name, :username])
+    |> validate_format(:username, ~r/^[a-z0-9_-]*[a-b][a-z0-9_-]*#[0-9]{4}$/i)
+    |> validate_length(:username, min: 4, max: 20)
+    |> validate_length(:first_name, min: 1, max: 100)
+    |> validate_length(:last_name, min: 1, max: 100)
+    |> validate_length(:password, min: 8, max: 100)
+    |> unique_constraint(:username)
+    |> put_hashed_password()
   end
 
   def registration_changeset(user, attrs) do
@@ -43,6 +56,11 @@ defmodule Lily.Accounts.User do
 
   defp put_hashed_password(%Ecto.Changeset{changes: %{password: password}} = changeset) do
     put_change(changeset, :hashed_password, Bcrypt.hash_pwd_salt(password))
+  end
+
+  # no errors but password not updated
+  defp put_hashed_password(%Ecto.Changeset{} = changeset) do
+    changeset
   end
 
   defp put_random_username_id(%Ecto.Changeset{valid?: false} = changeset) do

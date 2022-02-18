@@ -16,6 +16,9 @@ defmodule LilyWeb.Router do
         patch "/", UserController, :update
         delete "/", UserController, :delete
       end
+
+      post "/login", SessionController, :create
+      delete "/logout", SessionController, :delete
     end
   end
 

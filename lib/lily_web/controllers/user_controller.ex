@@ -23,7 +23,7 @@ defmodule LilyWeb.UserController do
   end
 
   def update(conn, %{"user" => user_params}) do
-    user = conn.assings.current_user
+    user = conn.assigns.current_user
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
       render(conn, "show.json", user: user)
