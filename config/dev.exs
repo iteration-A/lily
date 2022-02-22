@@ -21,7 +21,7 @@ config :lily, LilyWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
-  debug_errors: true,
+  debug_errors: false,
   secret_key_base: "3TDCPvqIEuuSwj0r9wnBeHNWvaepp3JzXtf6/s0obj3OSNb0OhjmtW/tNsc4Dz0V",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
