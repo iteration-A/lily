@@ -20,7 +20,7 @@ defmodule Lily.Accounts.User do
     user
     |> cast(attrs, [:first_name, :last_name, :username])
     |> validate_required([:first_name, :last_name, :username])
-    |> validate_format(:username, ~r/^[a-z0-9_-]*[a-b][a-z0-9_-]*$/i)
+    |> validate_format(:username, ~r/^[a-z0-9_-]*[a-z][a-z0-9_-]*$/i)
     |> validate_length(:username, min: 4, max: 20)
     |> validate_length(:first_name, min: 1, max: 100)
     |> validate_length(:last_name, min: 1, max: 100)
@@ -31,7 +31,7 @@ defmodule Lily.Accounts.User do
     user
     |> cast(attrs, [:first_name, :last_name, :username, :password])
     |> validate_required([:first_name, :last_name, :username])
-    |> validate_format(:username, ~r/^[a-z0-9_-]*[a-b][a-z0-9_-]*#[0-9]{4}$/i)
+    |> validate_format(:username, ~r/^[a-z0-9_-]*[a-z][a-z0-9_-]*#[0-9]{4}$/i)
     |> validate_length(:username, min: 4, max: 20)
     |> validate_length(:first_name, min: 1, max: 100)
     |> validate_length(:last_name, min: 1, max: 100)

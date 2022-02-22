@@ -2,6 +2,10 @@ defmodule LilyWeb.UserView do
   use LilyWeb, :view
   alias LilyWeb.UserView
 
+  def render("error.json", %{message: message}) do 
+    %{errors: %{ details: message }}
+  end
+
   def render("index.json", %{users: users}) do
     %{data: render_many(users, UserView, "user.json")}
   end

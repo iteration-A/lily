@@ -9,6 +9,7 @@ defmodule LilyWeb.SessionController do
       {:error, _reason} ->
         conn
         |> halt()
+        |> put_status(:unauthorized)
         |> render("400.json", %{message: "Invalid credentials"})
 
       {:ok, user} ->
