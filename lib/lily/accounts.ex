@@ -120,7 +120,7 @@ defmodule Lily.Accounts do
 
   def authenticate_user(username, password) do
     from(user in User, where: user.username == ^username)
-    |> Repo.one!()
+    |> Repo.one()
     |> case do
       nil ->
         {:error, :not_found}

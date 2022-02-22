@@ -1,3 +1,4 @@
+alias Lily.Repo
 alias Lily.Accounts
 alias Lily.Accounts.{User}
 alias Lily.Settings
