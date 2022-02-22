@@ -47,6 +47,7 @@ defmodule Lily.Accounts.User do
     |> validate_required([:password])
     |> validate_length(:password, min: 8, max: 100)
     |> put_hashed_password()
+
     # |> put_random_username_id()
   end
 

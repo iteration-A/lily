@@ -26,20 +26,20 @@ defmodule Lily.Settings do
     get_settings().allow_registration
   end
 
-  def allow_registration(true) do 
+  def allow_registration(true) do
     update_settings(%{allow_registration: true}).allow_registration
   end
 
-  def allow_registration(false) do 
+  def allow_registration(false) do
     update_settings(%{allow_registration: false}).allow_registration
   end
 
-  def allow_registration! do 
+  def allow_registration! do
     current_status = allow_registration()
     update_settings(%{allow_registration: !current_status}).allow_registration
   end
 
-  def update_settings(attrs) do 
+  def update_settings(attrs) do
     get_settings()
     |> Setting.changeset(attrs)
     |> Repo.update!()

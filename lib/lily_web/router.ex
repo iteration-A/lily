@@ -5,7 +5,7 @@ defmodule LilyWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :auth do 
+  pipeline :auth do
     plug LilyWeb.Plugs.Auth
   end
 
@@ -26,9 +26,14 @@ defmodule LilyWeb.Router do
       post "/login", SessionController, :create
       delete "/logout", SessionController, :delete
 
-      scope "/profiles" do 
+      scope "/profiles" do
         pipe_through :auth
         get "/", ProfileController, :show
+      end
+
+      scope "/friends" do
+        pipe_through :auth
+        resources "/", FriendsController, only: ~w(index create delete)a
       end
     end
   end

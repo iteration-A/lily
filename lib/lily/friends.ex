@@ -23,6 +23,24 @@ defmodule Lily.Friends do
   end
 
   @doc """
+  Returns a specific friendship.
+
+  Raises `Ecto.NoResultsError` if no friendship exists.
+
+  ## Examples
+
+      iex> get_friendship!(user, friend)
+      %Friendship{}
+
+  """
+  def get_friendship!(user, friend) do
+    from(f in Friendship,
+      where: f.user_id in [^user.id, ^friend.id] and f.friend_id in [^user.id, ^friend.id]
+    )
+    |> Repo.one!()
+  end
+
+  @doc """
   Gets logged in user friendships
 
   Returns `[]` if the Friendship does not exist.

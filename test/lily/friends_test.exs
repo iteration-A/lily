@@ -54,7 +54,7 @@ defmodule Lily.FriendsTest do
         Friends.get_user_friendships(current_user)
         |> Enum.map(fn user -> Map.put(user, :password, nil) end)
 
-      for f <- friends_without_password do 
+      for f <- friends_without_password do
         assert f in returned_friends_without_password
       end
     end
@@ -64,7 +64,9 @@ defmodule Lily.FriendsTest do
       %{id: friend_id} = friend = user_fixture()
 
       # create friendship
-      assert %{user_id: ^friend_id, friend_id: ^current_user_id} = friendship_fixture(friend, current_user)
+      assert %{user_id: ^friend_id, friend_id: ^current_user_id} =
+               friendship_fixture(friend, current_user)
+
       assert [%{id: ^friend_id}] = Friends.get_user_friendships(current_user)
     end
 
@@ -73,7 +75,9 @@ defmodule Lily.FriendsTest do
       %{id: friend_id} = friend = user_fixture()
 
       # create friendship
-      assert %{user_id: ^current_user_id, friend_id: ^friend_id} = friendship_fixture(current_user, friend)
+      assert %{user_id: ^current_user_id, friend_id: ^friend_id} =
+               friendship_fixture(current_user, friend)
+
       assert [%{id: ^friend_id}] = Friends.get_user_friendships(current_user)
     end
   end
@@ -115,7 +119,8 @@ defmodule Lily.FriendsTest do
       shinobu_without_password = Map.put(shinobu, :password, nil)
       assert shinobu_without_password in Friends.get_user_friendships(giyu)
 
-      assert {:ok, _} = Friends.delete_friendship(friendship) # :(
+      # :(
+      assert {:ok, _} = Friends.delete_friendship(friendship)
       refute shinobu_without_password in Friends.get_user_friendships(giyu)
     end
   end

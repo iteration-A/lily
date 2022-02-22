@@ -1,9 +1,9 @@
-defmodule LilyWeb.SettingsController do 
+defmodule LilyWeb.SettingsController do
   use LilyWeb, :controller
 
   alias Lily.Settings
 
-  def index(conn, _params) do 
+  def index(conn, _params) do
     render(conn, "index.json", settings: Settings.get_settings())
   end
 end

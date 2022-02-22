@@ -49,7 +49,7 @@ defmodule Lily.Friends.Friendship do
       from(f in Friendship, where: f.user_id == ^user and f.friend_id == ^friend)
       |> Repo.one()
     end)
-    |> if do 
+    |> if do
       changeset
       |> add_error(:already_friends, "users are already friends")
     else

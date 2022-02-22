@@ -1,7 +1,7 @@
 defmodule LilyWeb.SessionView do
   use LilyWeb, :view
 
-  def render("200.json", _assigns) do 
+  def render("200.json", _assigns) do
     %{ok: true}
   end
 
