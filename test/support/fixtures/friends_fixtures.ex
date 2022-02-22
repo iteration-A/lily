@@ -7,13 +7,8 @@ defmodule Lily.FriendsFixtures do
   @doc """
   Generate a friendship.
   """
-  def friendship_fixture(attrs \\ %{}) do
-    {:ok, friendship} =
-      attrs
-      |> Enum.into(%{
-
-      })
-      |> Lily.Friends.create_friendship()
+  def friendship_fixture(user, friend) do
+    {:ok, friendship} = Lily.Friends.add_friends(user, friend)
 
     friendship
   end

@@ -23,22 +23,6 @@ defmodule Lily.Friends do
   end
 
   @doc """
-  Gets a single friendship.
-
-  Raises `Ecto.NoResultsError` if the Friendship does not exist.
-
-  ## Examples
-
-      iex> get_friendship!(123)
-      %Friendship{}
-
-      iex> get_friendship!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_friendship!(id), do: Repo.get!(Friendship, id)
-
-  @doc """
   Gets logged in user friendships
 
   Returns `[]` if the Friendship does not exist.
@@ -57,10 +41,18 @@ defmodule Lily.Friends do
       where: f.user_id == ^id or f.friend_id == ^id,
       join: friend in Accounts.User,
       on: f.friend_id == friend.id,
-      select: friend
+      join: user in Accounts.User,
+      on: f.user_id == user.id,
+      select: {user, friend}
     )
     |> Repo.all()
-    |> Enum.filter(fn %{id: user_id} -> user_id != id end)
+    |> Enum.map(fn {user, friend} ->
+      if user.id == id do
+        friend
+      else
+        user
+      end
+    end)
   end
 
   @doc """
@@ -68,16 +60,13 @@ defmodule Lily.Friends do
 
   ## Examples
 
-      iex> create_friendship(%{field: value})
+      iex> add_friends(%Accounts.User{...}, %Accounts.User{...})
       {:ok, %Friendship{}}
 
-      iex> create_friendship(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
-  def create_friendship(attrs \\ %{}) do
+  def add_friends(user, friend) do
     %Friendship{}
-    |> Friendship.changeset(attrs)
+    |> Friendship.changeset(%{user_id: user.id, friend_id: friend.id})
     |> Repo.insert()
   end
 
