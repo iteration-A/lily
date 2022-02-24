@@ -11,6 +11,11 @@ defmodule Lily.Chats do
   alias Lily.Friends
 
   @doc """
+  Returns a Chat record by id
+  """
+  def get_chat!(chat_id), do: Repo.get!(Chat, chat_id)
+
+  @doc """
   Returns a Chat record
 
   ## Examples
@@ -53,7 +58,7 @@ defmodule Lily.Chats do
   def create_chat(user, another_user) do
     with true <- Friends.are_friends?(user, another_user),
          chat when not is_nil(chat) <- get_chat(user, another_user) do
-      chat
+      {:ok, chat}
     else
       # they are not friends
       false ->
@@ -66,7 +71,7 @@ defmodule Lily.Chats do
           |> Chat.changeset(%{user1_id: user.id, user2_id: another_user.id})
           |> Repo.insert()
 
-        chat
+        {:ok, chat}
     end
   end
 
@@ -125,5 +130,26 @@ defmodule Lily.Chats do
         from(m in Message, where: m.chat_id == ^chat.id)
         |> Repo.all()
     end
+  end
+
+  @doc """
+  Is member? Self explanatory idk.
+  Accepts either a %User{} or its id.
+
+  ## Examples
+
+      iex> is_member?(user, user)
+      true
+
+      iex> is_member?(user, none)
+      false
+
+  """
+  def is_member?(chat, user) when is_map(user) do 
+    chat.user1_id == user.id or chat.user2_id == user.id
+  end
+
+  def is_member?(chat, user_id) do
+    chat.user1_id == user_id or chat.user2_id == user_id
   end
 end

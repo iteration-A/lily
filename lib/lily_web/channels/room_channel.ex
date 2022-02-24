@@ -2,6 +2,7 @@ defmodule LilyWeb.RoomChannel do
   use LilyWeb, :channel
   alias Lily.Friends
   alias Lily.Accounts
+  alias Lily.Chats
 
   @impl true
   def join("room:" <> room_id, _payload, socket) do
@@ -12,16 +13,18 @@ defmodule LilyWeb.RoomChannel do
     end
   end
 
-  def handle_in("new_message", %{"message" => m}, socket) do 
+  def handle_in("new_message", %{"message" => m}, socket) do
     user = socket.assigns.user_id
     broadcast!(socket, "new_message", %{message: m, from: user})
     {:noreply, socket}
   end
 
   defp authorized?(room_id, %{assigns: %{user_id: user_id}}) do
-    user = Accounts.get_user(user_id)
-    friend = Accounts.get_user_by(username: room_id)
+    chat = Chats.get_chat!(room_id)
+    IO.puts "AAAAAAAA"
+    IO.inspect(chat)
+    IO.inspect(user_id)
 
-    Friends.are_friends?(user, friend)
+    Chats.is_member?(chat, user_id)
   end
 end

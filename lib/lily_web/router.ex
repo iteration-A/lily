@@ -40,6 +40,11 @@ defmodule LilyWeb.Router do
         pipe_through :auth
         resources "/", FriendsController, only: ~w(index create delete)a
       end
+
+      scope "/chats" do 
+        pipe_through :auth
+        get "/:friend", ChatController, :create
+      end
     end
   end
 
