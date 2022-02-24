@@ -3,7 +3,6 @@ defmodule Lily.Chats.Chat do
   import Ecto.Changeset
 
   schema "chats" do
-
     field :user1_id, :id
     field :user2_id, :id
 

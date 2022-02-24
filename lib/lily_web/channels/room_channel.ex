@@ -21,10 +21,6 @@ defmodule LilyWeb.RoomChannel do
 
   defp authorized?(room_id, %{assigns: %{user_id: user_id}}) do
     chat = Chats.get_chat!(room_id)
-    IO.puts "AAAAAAAA"
-    IO.inspect(chat)
-    IO.inspect(user_id)
-
     Chats.is_member?(chat, user_id)
   end
 end

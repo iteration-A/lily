@@ -10,9 +10,7 @@ defmodule Lily.ChatsFixtures do
   def chat_fixture(attrs \\ %{}) do
     {:ok, chat} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Lily.Chats.create_chat()
 
     chat

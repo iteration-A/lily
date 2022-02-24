@@ -16,7 +16,7 @@ defmodule LilyWeb.Router do
     scope "/v1" do
       get "/settings", SettingsController, :index
 
-      scope "/token" do 
+      scope "/token" do
         pipe_through :auth
         get "/", TokenController, :create
       end
@@ -41,7 +41,7 @@ defmodule LilyWeb.Router do
         resources "/", FriendsController, only: ~w(index create delete)a
       end
 
-      scope "/chats" do 
+      scope "/chats" do
         pipe_through :auth
         get "/:friend", ChatController, :create
       end

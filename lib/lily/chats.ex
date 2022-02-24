@@ -145,7 +145,7 @@ defmodule Lily.Chats do
       false
 
   """
-  def is_member?(chat, user) when is_map(user) do 
+  def is_member?(chat, user) when is_map(user) do
     chat.user1_id == user.id or chat.user2_id == user.id
   end
 

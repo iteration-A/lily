@@ -74,8 +74,8 @@ defmodule Lily.Friends do
   def are_friends?(_, nil), do: false
   def are_friends?(nil, _), do: false
 
-  def are_friends?(user, another_user) do 
-    case get_friendship(user, another_user) do 
+  def are_friends?(user, another_user) do
+    case get_friendship(user, another_user) do
       %Friendship{} -> true
       _ -> false
     end
