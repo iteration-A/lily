@@ -41,6 +41,47 @@ defmodule Lily.Friends do
   end
 
   @doc """
+  Returns a specific friendship.
+
+  Returns nil if no friendship exists.
+
+  ## Examples
+
+      iex> get_friendship!(user, friend)
+      %Friendship{}
+
+  """
+  def get_friendship(user, friend) do
+    from(f in Friendship,
+      where: f.user_id in [^user.id, ^friend.id] and f.friend_id in [^user.id, ^friend.id]
+    )
+    |> Repo.one()
+  end
+
+  @doc """
+  Answers if two users are friends
+
+  ## Examples
+
+      iex> are_friends?(shinobu, kanao)
+      true
+
+      iex> are_friends?(shinobu, douma)
+      false
+
+  """
+  def are_friends?(nil, nil), do: false
+  def are_friends?(_, nil), do: false
+  def are_friends?(nil, _), do: false
+
+  def are_friends?(user, another_user) do 
+    case get_friendship(user, another_user) do 
+      %Friendship{} -> true
+      _ -> false
+    end
+  end
+
+  @doc """
   Gets logged in user friendships
 
   Returns `[]` if the Friendship does not exist.
