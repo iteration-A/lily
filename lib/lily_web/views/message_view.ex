@@ -13,7 +13,8 @@ defmodule LilyWeb.MessageView do
     %{
       to: message.to,
       from: message.from,
-      body: message.body
+      body: message.body,
+      id: message.id
     }
   end
 end

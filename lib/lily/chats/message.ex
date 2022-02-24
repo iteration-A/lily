@@ -2,6 +2,8 @@ defmodule Lily.Chats.Message do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: ~w(id body from to inserted_at)a}
+
   schema "messages" do
     field :body, :string
     field :from, :id
