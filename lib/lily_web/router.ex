@@ -45,6 +45,12 @@ defmodule LilyWeb.Router do
         pipe_through :auth
         get "/:friend", ChatController, :create
       end
+
+      scope "/messages" do
+        pipe_through :auth
+
+        get "/:chat_id", MessageController, :index
+      end
     end
   end
 

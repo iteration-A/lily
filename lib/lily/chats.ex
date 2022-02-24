@@ -132,6 +132,11 @@ defmodule Lily.Chats do
     end
   end
 
+  def get_messages_by_chat(chat) do
+    from(m in Message, where: m.chat_id == ^chat.id)
+    |> Repo.all()
+  end
+
   @doc """
   Is member? Self explanatory idk.
   Accepts either a %User{} or its id.

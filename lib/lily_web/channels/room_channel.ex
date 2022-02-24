@@ -1,7 +1,5 @@
 defmodule LilyWeb.RoomChannel do
   use LilyWeb, :channel
-  alias Lily.Friends
-  alias Lily.Accounts
   alias Lily.Chats
 
   @impl true
@@ -13,6 +11,7 @@ defmodule LilyWeb.RoomChannel do
     end
   end
 
+  @impl true
   def handle_in("new_message", %{"message" => m}, socket) do
     user = socket.assigns.user_id
     broadcast!(socket, "new_message", %{message: m, from: user})
